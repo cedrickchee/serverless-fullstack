@@ -226,3 +226,7 @@ Serverless: Stack removal finished...
 Serverless: Publishing service to the Serverless Dashboard...
 Serverless: Successfully published your service to the Serverless Dashboard: https://dashboard.serverless.com/tenants/{username}/applications/{app name}/services/{service name}/stage/dev/region/{AWS region}
 ```
+
+## References
+
+- [Serverless Full Stack Application on AWS course](https://www.serverless.com/learn/courses/full-stack-application-development-on-aws/)
