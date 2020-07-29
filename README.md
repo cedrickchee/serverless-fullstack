@@ -38,6 +38,15 @@ $ npm install -g serverless
 added 752 packages from 501 contributors in 33.039s
 ```
 
+Next, sign up for a Serverless account.
+
+Then, head over to Serverless Dashboard and look for your deployment "profiles".
+Go to your "dev" profile and add an additional "parameters" to that:
+
+```text
+JWT_SECRET: xxxxxxxxxxxxx
+```
+
 ## Build serverless endpoint
 
 Create a User service:
@@ -126,12 +135,14 @@ service: user-service
 stage: dev
 region: us-east-1
 stack: user-service-dev
-resources: 23
+resources: 33
 api keys:
   None
 endpoints:
-  POST - https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/v1/user
+  POST - https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/v1/user/login
+  POST - https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/v1/user
 functions:
+  loginUser: user-service-dev-loginUser
   createUser: user-service-dev-createUser
 layers:
   None
@@ -141,10 +152,12 @@ Serverless: Successfully published your service to the Serverless Dashboard: htt
 
 ## Usage
 
-Send an HTTP request directly to the endpoint using a tool like curl
+Send an HTTP request directly to the endpoint using a tool like curl.
+
+- Register a new user:
 
 ```sh
-$ curl --request POST     --url https://u1q121neg8.execute-api.us-east-1.amazonaws.com/dev/v1/user --data '{"username":"cedric","password":"superpass321"}' -H 'Content-Type: application/json' -i
+$ curl --request POST --url https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/v1/user --data '{"username":"cedric","password":"superpass321"}' -H 'Content-Type: application/json' -i
 HTTP/1.1 201 Created
 Content-Type: application/json
 Content-Length: 0
@@ -160,6 +173,27 @@ X-Cache: Miss from cloudfront
 Via: 1.1 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.cloudfront.net (CloudFront)
 X-Amz-Cf-Pop: FRA2-C1
 X-Amz-Cf-Id: xxxxxxxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxx==
+```
+
+- Authenticate a user and and return a JWT:
+
+```sh
+$ curl --request POST --url https://XXXXXXX.execute-api.us-east-1.amazonaws.com/dev/v1/user/login --data '{"username":"cedric","password":"superpass321"}' -H 'Content-Type: application/json'
+
+HTTP/1.1 200 OK
+Content-Type: application/json
+Content-Length: 141
+Connection: keep-alive
+Date: Wed, 29 Jul 2020 13:23:44 GMT
+x-amzn-RequestId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx
+x-amz-apigw-id: XXXXXXXXXXXXXXX=
+X-Amzn-Trace-Id: Root=1-xxxxxx-xxxxxxxxxxxxxxxx;Sampled=0
+X-Cache: Miss from cloudfront
+Via: 1.1 xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.cloudfront.net (CloudFront)
+X-Amz-Cf-Pop: AMS54-C1
+X-Amz-Cf-Id: xxxxxxxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxx==
+
+{"token":"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"}
 ```
 
 That's it. We're done.

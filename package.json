@@ -3,7 +3,8 @@
   "description": "",
   "version": "0.1.0",
   "dependencies": {
-    "bcryptjs": "^2.4.3"
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^8.5.1"
   },
   "devDependencies": {
     "aws-sdk": "^2.722.0",
