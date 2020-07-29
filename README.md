@@ -64,11 +64,24 @@ This project was created with this command.
 ```sh
 $ serverless create --template-path ./serverless-template --path user-service
 Serverless: Generating boilerplate...
+```
 
+Create a Lambda function for authenticating our user:
+
+```sh
 $ serverless create function -f createUser --handler src/functions/createUser.createUser --path src/tests
 Serverless: Generating function...
 Serverless: Created function file "/home/cedric/m/dev/scratch/serverless/user-service/src/functions/createUser.js"
 Serverless: serverless-mocha-plugin: created src/tests/createUser.js
+```
+
+Create a Lambda function for validating user JWTs:
+
+```sh
+$ serverless create function -f validate --handler src/functions/validate.validate --path src/tests
+Serverless: Generating function...
+Serverless: Created function file "/home/cedric/m/dev/scratch/serverless/user-service/src/functions/validate.js"
+Serverless: serverless-mocha-plugin: created src/tests/validate.js
 ```
 
 ### Deploy
