@@ -148,13 +148,14 @@ service: user-service
 stage: dev
 region: us-east-1
 stack: user-service-dev
-resources: 33
+resources: 37
 api keys:
   None
 endpoints:
   POST - https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/v1/user/login
   POST - https://XXXXXXXXXX.execute-api.us-east-1.amazonaws.com/dev/v1/user
 functions:
+  validate: user-service-dev-validate
   loginUser: user-service-dev-loginUser
   createUser: user-service-dev-createUser
 layers:
