@@ -1,6 +1,6 @@
-'use strict';
-const AWS = require('aws-sdk');
-const bcrypt = require('bcryptjs');
+"use strict";
+const AWS = require("aws-sdk");
+const bcrypt = require("bcryptjs");
 
 module.exports.createUser = async (event, context) => {
   const body = JSON.parse(event.body);
@@ -10,8 +10,8 @@ module.exports.createUser = async (event, context) => {
     TableName: process.env.DYNAMODB_USER_TABLE,
     Item: {
       pk: username,
-      password: bcrypt.hashSync(password, 10)
-    }
+      password: bcrypt.hashSync(password, 10),
+    },
   };
 
   try {
@@ -20,15 +20,15 @@ module.exports.createUser = async (event, context) => {
     return {
       statusCode: 201,
       headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Credentials': true,
-        'Access-Control-Allow-Headers': 'Authorization'
-      }
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+        "Access-Control-Allow-Headers": "Authorization",
+      },
     };
-  } catch(putError) {
-    console.log('There was an error putting the new item');
-    console.log('putError', putError);
-    console.log('newUserParams', newUserParams);
-    return new Error('There was an error putting the new item');
+  } catch (putError) {
+    console.log("There was an error putting the new item");
+    console.log("putError", putError);
+    console.log("newUserParams", newUserParams);
+    return new Error("There was an error putting the new item");
   }
 };
